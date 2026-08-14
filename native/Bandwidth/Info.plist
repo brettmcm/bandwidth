@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>Bandwidth</string>
+    <key>CFBundleExecutable</key>
+    <string>Bandwidth</string>
+    <key>CFBundleIconFile</key>
+    <string>Bandwidth.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.mcmdesign.bandwidth</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Bandwidth</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>Local utility for Brett McMillin</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>BandwidthDefaultProjectDir</key>
+    <string>__PROJECT_DIR__</string>
+    <key>BandwidthPort</key>
+    <integer>3000</integer>
+</dict>
+</plist>

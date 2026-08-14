@@ -1,0 +1,632 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.xctest/Contents/MacOS/BandwidthPackageTests",
+      "packagePath" : "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth",
+      "productName" : "BandwidthPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.Bandwidth-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources",
+      "importPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "Bandwidth",
+      "moduleOutputPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule",
+      "objects" : [
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "Bandwidth_main",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "bandwidth"
+      ],
+      "outputFileMapPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift"
+      ],
+      "tempsPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BandwidthPackageTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources",
+      "importPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BandwidthPackageTests",
+      "moduleOutputPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/include/BandwidthPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "bandwidth"
+      ],
+      "outputFileMapPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BandwidthTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources",
+      "importPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BandwidthTests",
+      "moduleOutputPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule",
+      "objects" : [
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "bandwidth"
+      ],
+      "outputFileMapPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift"
+      ],
+      "tempsPath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "Bandwidth" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Bandwidth",
+      "-package-name",
+      "bandwidth",
+      "-c",
+      "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift",
+      "-I",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "Bandwidth_main",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "bandwidth",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "BandwidthPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "BandwidthPackageTests",
+      "-package-name",
+      "bandwidth",
+      "-c",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/include/BandwidthPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "bandwidth",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "BandwidthTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "BandwidthTests",
+      "-package-name",
+      "bandwidth",
+      "-c",
+      "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift",
+      "-I",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "bandwidth",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "Bandwidth" : [
+
+    ],
+    "BandwidthPackageTests" : [
+      "BandwidthTests",
+      "Bandwidth"
+    ],
+    "BandwidthTests" : [
+      "Bandwidth"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources"
+    },
+    "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

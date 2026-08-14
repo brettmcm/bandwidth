@@ -1,0 +1,3 @@
+module BandwidthPackageTests {
+    header "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/include/BandwidthPackageTests-Swift.h"
+}

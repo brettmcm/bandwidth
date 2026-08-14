@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1786558774776,
+      "tag": "0000_crazy_karnak",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1786558807737,
+      "tag": "0001_productive_leech",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1786589781653,
+      "tag": "0002_outstanding_rafael_vega",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1786590746274,
+      "tag": "0003_nice_power_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1786650109567,
+      "tag": "0004_amazing_franklin_storm",
+      "breakpoints": true
+    }
+  ]
+}

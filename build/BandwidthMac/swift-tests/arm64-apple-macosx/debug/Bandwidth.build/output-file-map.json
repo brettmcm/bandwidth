@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/primary.swiftdeps"
+  },
+  "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift": {
+    "dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.d",
+    "object": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o",
+    "swiftmodule": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swiftdeps",
+    "diagnostics": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.dia"
+  }
+}

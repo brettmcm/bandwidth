@@ -1,0 +1,67 @@
+# Workload Runway
+
+A quiet, local view of official requests, preparation windows, product coverage, and time away.
+
+## Open it
+
+Open `~/Applications/Bandwidth.app`, or double-click `outputs/Open Workload Runway.command`.
+
+## How the view works
+
+- Asana remains the official intake source.
+- Only Asana tasks appear as commitments; Bandwidth does not create commitments locally.
+- Each Asana task uses its official due date until a conversation-derived working landing is saved.
+- Calculated schedules count working days backward and skip weekends and saved blackouts.
+- Local overlays hold working landings, prep estimates, product tags, Slack context, and optional Deep Thought links without overwriting official task metadata.
+- A task can be completed in Asana by holding the full-width drawer action for three seconds. The completed task remains visible until the drawer closes, then the runway reloads without it.
+- The runway expands to include every commitment's calculated schedule, with one week of context before and after the task dates.
+- Blackouts are stored only in the app's local D1 database.
+
+## Days
+
+The **Days** tab is the historical companion to the future-facing runway. Beginning July 6, 2026, it shows one month at a time. A dot marks each date with a Daily Note; selecting any available date opens a familiar right-side drawer with two records:
+
+- **Completed** contains only Asana tasks with a confirmed completion timestamp.
+- **Reflection** renders only the Daily Note's `End Of Day Brief` section.
+
+Morning Briefs and unstructured note content are intentionally omitted from Days, so intended work is never confused with completed work.
+
+Daily Note Markdown is read only by the native Mac app, held in memory, and never copied into D1 or browser storage. Bandwidth resolves Deep Thought through `~/.codex/obsidian-vaults.json` and Obsidian's configured Daily Notes folder; editing continues in Obsidian. Browser previews retain Asana history but show that local notes are unavailable.
+
+## Conversation scheduling rule
+
+Slack scheduling context is tracked separately from the official Asana due date:
+
+- **Aligned** — the latest thread context explicitly accepts one date or window.
+- **Tentative** — the thread has one working date, but it remains flexible, proposed, or unlocked.
+- **Decision needed** — the thread contains multiple viable dates, a later alternative, or an explicit scheduling handoff without a subsequent confirmation.
+- **Not reviewed** — the thread has not been evaluated for scheduling context.
+
+A conversation-derived working landing never overwrites the Asana due date. Bandwidth preserves both, shows unresolved options and ownership, and keeps decision-needed work visibly provisional until a person marks it aligned.
+
+## Connect Asana refresh
+
+Copy `.env.example` to `.env.local`, add a personal Asana access token to `ASANA_ACCESS_TOKEN`, and restart the app. Keep the token local; do not paste it into chat or commit it.
+
+The refresh reads active and recently completed tasks assigned to the authenticated user in the configured Advocacy project. Completed work is backfilled from July 6, 2026 and then synced incrementally. Completing a task requires the token's Asana user to have permission to edit that task. If Asana is not connected, the grounded local snapshot remains available.
+
+## Development
+
+```bash
+npm install
+npm run dev
+npm test
+```
+
+## Native app
+
+- Build: `npm run build:mac`
+- Project source: `~/Apps/Bandwidth`
+- Staged artifact: `dist/Bandwidth.app`
+- Installed artifact: `~/Applications/Bandwidth.app`
+- Lifecycle: the app starts its own local server, opens the runway in WebKit, and stops the owned server when its last window closes.
+- External Asana and Slack links open in the default browser.
+- Wrapper log: `~/Library/Caches/Bandwidth/native-wrapper.log`
+- Project override after moving the checkout: `BANDWIDTH_PROJECT_DIR=/absolute/path/to/project`
+- Node override: `BANDWIDTH_NODE_PATH=/absolute/path/to/node`
+- Icon source: `scripts/render-bandwidth-icon.swift`

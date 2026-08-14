@@ -1,0 +1,2 @@
+CREATE INDEX `idx_work_items_active_landing` ON `work_items` (`archived`,`landing_start`);--> statement-breakpoint
+CREATE UNIQUE INDEX `idx_work_items_slack_url` ON `work_items` (`slack_url`) WHERE "work_items"."slack_url" IS NOT NULL AND "work_items"."slack_url" <> '';

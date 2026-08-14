@@ -1,0 +1,1 @@
+ALTER TABLE `work_items` ADD `completed_at` text;

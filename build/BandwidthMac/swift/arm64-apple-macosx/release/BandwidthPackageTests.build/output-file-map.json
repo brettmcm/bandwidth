@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/BandwidthPackageTests.d",
+    "object": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/BandwidthPackageTests.o",
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/primary.swiftdeps"
+  },
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.derived/runner.swift": {
+    "object": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift/arm64-apple-macosx/release/BandwidthPackageTests.build/runner.dia"
+  }
+}

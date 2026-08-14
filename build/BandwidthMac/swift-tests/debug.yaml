@@ -1,0 +1,146 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "Bandwidth-arm64-apple-macosx-debug.exe": ["<Bandwidth-arm64-apple-macosx-debug.exe>"]
+  "Bandwidth-arm64-apple-macosx-debug.module": ["<Bandwidth-arm64-apple-macosx-debug.module>"]
+  "BandwidthPackageTests-arm64-apple-macosx-debug.module": ["<BandwidthPackageTests-arm64-apple-macosx-debug.module>"]
+  "BandwidthPackageTests-arm64-apple-macosx-debug.test": ["<BandwidthPackageTests-arm64-apple-macosx-debug.test>"]
+  "BandwidthTests-arm64-apple-macosx-debug.module": ["<BandwidthTests-arm64-apple-macosx-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<Bandwidth-arm64-apple-macosx-debug.exe>","<Bandwidth-arm64-apple-macosx-debug.module>"]
+  "test": ["<Bandwidth-arm64-apple-macosx-debug.exe>","<Bandwidth-arm64-apple-macosx-debug.module>","<BandwidthPackageTests-arm64-apple-macosx-debug.test>","<BandwidthTests-arm64-apple-macosx-debug.module>"]
+default: "main"
+nodes:
+  "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth":
+    is-mutated: true
+commands:
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift":
+    tool: test-entry-point-tool
+    inputs: []
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift"]
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources"]
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources"
+
+  "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<Bandwidth-arm64-apple-macosx-debug.exe>":
+    tool: phony
+    inputs: ["<Bandwidth-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    outputs: ["<Bandwidth-arm64-apple-macosx-debug.exe>"]
+
+  "<Bandwidth-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule"]
+    outputs: ["<Bandwidth-arm64-apple-macosx-debug.module>"]
+
+  "<BandwidthPackageTests-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule"]
+    outputs: ["<BandwidthPackageTests-arm64-apple-macosx-debug.module>"]
+
+  "<BandwidthPackageTests-arm64-apple-macosx-debug.test>":
+    tool: phony
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.xctest/Contents/MacOS/BandwidthPackageTests"]
+    outputs: ["<BandwidthPackageTests-arm64-apple-macosx-debug.test>"]
+
+  "<BandwidthTests-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule"]
+    outputs: ["<BandwidthTests-arm64-apple-macosx-debug.module>"]
+
+  "C.Bandwidth-arm64-apple-macosx-debug.exe":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth"]
+    description: "Linking /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug","-o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth","-module-name","Bandwidth","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_Bandwidth_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-framework","AppKit","-framework","WebKit","-Xlinker","-add_ast_path","-Xlinker","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.Bandwidth-arm64-apple-macosx-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist"]
+    outputs: ["<Bandwidth-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth-entitlement.plist","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth"]
+
+  "C.Bandwidth-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/main.swift","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule"]
+    description: "Compiling Swift Module 'Bandwidth' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","Bandwidth","-emit-dependencies","-emit-module","-emit-module-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule","-output-file-map","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/output-file-map.json","-incremental","-c","@/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/sources","-I","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j12","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","Bandwidth_main","-parse-as-library","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","bandwidth"]
+
+  "C.BandwidthPackageTests-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.derived/runner.swift","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule"]
+    description: "Compiling Swift Module 'BandwidthPackageTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","BandwidthPackageTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule","-output-file-map","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/sources","-I","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-Xfrontend","-enable-cross-import-overlays","-j12","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/include/BandwidthPackageTests-Swift.h","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","bandwidth"]
+
+  "C.BandwidthPackageTests-arm64-apple-macosx-debug.test":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth.build/main.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.build/runner.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.xctest/Contents/MacOS/BandwidthPackageTests"]
+    description: "Linking /Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.xctest/Contents/MacOS/BandwidthPackageTests"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug","-o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.xctest/Contents/MacOS/BandwidthPackageTests","-module-name","BandwidthPackageTests","-Xlinker","-no_warn_duplicate_libraries","-Xlinker","-bundle","-Xlinker","-rpath","-Xlinker","@loader_path/../../../","@/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthPackageTests.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx14.0","-framework","AppKit","-framework","WebKit","-Xlinker","-add_ast_path","-Xlinker","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/Bandwidth.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthPackageTests.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.BandwidthTests-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Bandwidth","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources"]
+    outputs: ["/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule"]
+    description: "Compiling Swift Module 'BandwidthTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","BandwidthTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules/BandwidthTests.swiftmodule","-output-file-map","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/sources","-I","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-Xfrontend","-enable-cross-import-overlays","-j12","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","bandwidth"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Sources/Bandwidth/","/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/","/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Package.swift","/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

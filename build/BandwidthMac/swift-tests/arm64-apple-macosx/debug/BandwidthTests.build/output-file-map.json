@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/primary.swiftdeps"
+  },
+  "/Users/bmcmillin/Apps/Bandwidth/native/Bandwidth/Tests/BandwidthTests/DailyNotesReaderTests.swift": {
+    "dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.d",
+    "object": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swift.o",
+    "swiftmodule": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.swiftdeps",
+    "diagnostics": "/Users/bmcmillin/Apps/Bandwidth/build/BandwidthMac/swift-tests/arm64-apple-macosx/debug/BandwidthTests.build/DailyNotesReaderTests.dia"
+  }
+}
