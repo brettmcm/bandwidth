@@ -200,13 +200,15 @@ test("clips weekend bands to the visible timeline range", async () => {
   assert.match(client, /ranges\.push\(\{ start: clippedStart, end: clippedEnd \}\)/);
 });
 
-test("switches between timeline and read-only area groupings", async () => {
+test("defaults to Today and switches between runway views", async () => {
   const [client, styles] = await Promise.all([
     readFile(new URL("../app/workload-client.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(client, /type RunwayView = "timeline" \| "area"/);
+  assert.match(client, /type RunwayView = "today" \| "timeline" \| "area" \| "days"/);
+  assert.match(client, /useState<RunwayView>\("today"\)/);
+  assert.match(client, /aria-controls="today-panel"/);
   assert.match(client, /role="tablist"/);
   assert.match(client, /aria-controls="timeline-panel"/);
   assert.match(client, /aria-controls="area-panel"/);
@@ -217,6 +219,7 @@ test("switches between timeline and read-only area groupings", async () => {
   assert.doesNotMatch(client, /area-card[\s\S]{0,300}beginCompletionHold/);
   assert.doesNotMatch(client, /area-group-heading|area-row-requester|area-row-date/);
   assert.match(styles, /\.runway-tab--active/);
+  assert.match(styles, /\.area-column \{[^}]*padding: 0;/);
   assert.match(styles, /\.area-column \{[\s\S]*background: var\(--surface-subtle\)/);
   assert.match(styles, /\.area-card \{[\s\S]*border: 0;[\s\S]*background: var\(--area-card-surface\)/);
   assert.match(styles, /\.area-card:hover/);
@@ -504,7 +507,7 @@ test("renders every right-side drawer as a floating panel", async () => {
 });
 
 test("separates planned, reflected, and unstructured Daily Note content", async () => {
-  const { splitDailyNote } = await import("../app/daily-note.ts");
+  const { countKeyTasks, splitDailyNote, splitMorningBrief, splitTodayPlan } = await import("../app/daily-note.ts");
 
   assert.deepEqual(
     splitDailyNote("Preface\n\n## Morning Brief\nPlan\n\n## End Of Day Brief\nLearned"),
@@ -526,6 +529,41 @@ test("separates planned, reflected, and unstructured Daily Note content", async 
     fallback: "# Ops\nRaw note",
   });
   assert.deepEqual(splitDailyNote(""), { planned: "", reflection: "", fallback: "" });
+
+  assert.deepEqual(
+    splitMorningBrief(`### Primary focus
+Today’s primary focus is to **ship the draft**.
+
+### Today’s shape
+Focused morning.
+
+### Key tasks
+- Draft the artifact.
+
+### Focus profile
+
+#### Overview
+It matters today.
+
+#### What success looks like
+The draft is sent.`),
+    {
+      primaryFocus: "Today’s primary focus is to **ship the draft**.",
+      focusProfile: "#### Overview\nIt matters today.\n\n#### What success looks like\nThe draft is sent.",
+      remaining: "### Today’s shape\nFocused morning.\n\n### Key tasks\n- Draft the artifact.",
+    }
+  );
+
+  assert.deepEqual(
+    splitTodayPlan("### Today’s shape\nYou have a focused morning.\n\n- **Focus: 9:00–11:00am** — Protect this window.\n\n### Key tasks\n- Draft the artifact.\n- Send the review."),
+    {
+      shape: "You have a focused morning.\n\n- **Focus: 9:00–11:00am** — Protect this window.",
+      keyTasks: "- Draft the artifact.\n- Send the review.",
+      remaining: "",
+    }
+  );
+  assert.equal(countKeyTasks("- Draft the artifact.\n- Send the review."), 2);
+  assert.equal(countKeyTasks("- No eligible tasks surfaced in Reminders or Asana."), 0);
 });
 
 test("builds complete Sunday-first calendar months", async () => {
@@ -550,8 +588,8 @@ test("adds a monthly Days calendar and a Completed and Reflection drawer", async
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(client, /type RunwayView = "timeline" \| "area" \| "days"/);
-  assert.match(client, /const RUNWAY_VIEWS: RunwayView\[\] = \["timeline", "area", "days"\]/);
+  assert.match(client, /type RunwayView = "today" \| "timeline" \| "area" \| "days"/);
+  assert.match(client, /const RUNWAY_VIEWS: RunwayView\[\] = \["today", "timeline", "area", "days"\]/);
   assert.match(client, /aria-controls="days-panel"/);
   assert.match(client, /<DaysView/);
   assert.match(client, /<DayRecordDrawer/);
@@ -590,6 +628,75 @@ test("adds a monthly Days calendar and a Completed and Reflection drawer", async
   assert.doesNotMatch(days, /calendar-day--empty/);
   assert.doesNotMatch(styles, /\.calendar-grid \{[^}]*border-(?:top|left):/);
   assert.match(styles, /\.safe-markdown/);
+});
+
+test("renders Today from the current Deep Thought Daily Note", async () => {
+  const [client, todayView, styles, readme] = await Promise.all([
+    readFile(new URL("../app/workload-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/today-view.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(client, /const todayNote = dailyNotes\.find/);
+  assert.match(client, /<TodayView/);
+  assert.match(client, /const refreshAll = async \(\) =>/);
+  assert.match(client, /const dailyContextRefresh = today \? loadDays\(today\) : Promise\.resolve\(\)/);
+  assert.match(client, /Promise\.allSettled\(\[/);
+  assert.match(client, /onClick=\{\(\) => void refreshAll\(\)\}/);
+  assert.match(client, /aria-label=\{refreshing \? "Refreshing everything" : "Refresh everything"\}/);
+  assert.match(client, /value="Refresh everything"/);
+  assert.match(client, /onSelect=\{\(\) => runCommand\(refreshAll\)\}/);
+  assert.doesNotMatch(client, /refreshCurrentView|Refresh Today|Refresh Logs|Refresh Asana/);
+  assert.match(client, /className="runway-brand"/);
+  assert.match(client, /className="runway-brand-logo"/);
+  assert.match(client, /\/brands\/bandwidth-logo-color\.png/);
+  assert.doesNotMatch(client, /bandwidth-logo-(?:black|white)\.png/);
+  assert.match(client, /activeView !== "today" && activeView !== "days"/);
+  assert.match(todayView, /splitDailyNote\(note\?\.markdown \?\? ""\)/);
+  assert.match(todayView, /splitMorningBrief\(planned\)/);
+  assert.match(todayView, /splitTodayPlan\(brief\.remaining\)/);
+  assert.match(todayView, /countKeyTasks\(plan\.keyTasks\)/);
+  assert.match(todayView, /You have \{keyTaskCount\} key/);
+  assert.doesNotMatch(todayView, /markdown=\{brief\.remaining\}/);
+  assert.match(todayView, /markdown=\{planned\}/);
+  assert.match(todayView, /markdown=\{fallback\}/);
+  assert.match(todayView, /markdown=\{reflection\}/);
+  assert.match(todayView, /Run \$hello to create the note and Morning Brief/);
+  assert.match(todayView, /<Drawer\.Root/);
+  assert.match(todayView, /className="today-focus-card"/);
+  assert.doesNotMatch(todayView, /today-date-graphic/);
+  assert.match(todayView, /className="today-date-weekday"/);
+  assert.match(todayView, /className="today-date-calendar"/);
+  assert.match(todayView, /listPresentation="schedule"/);
+  assert.match(todayView, /listPresentation="tasks"/);
+  assert.match(todayView, /className="inspector drawer-panel today-focus-drawer"/);
+  assert.doesNotMatch(todayView, />View profile</);
+  assert.doesNotMatch(todayView, /<p>Daily Note<\/p>/);
+  assert.doesNotMatch(todayView, /today-section-label">Morning Brief/);
+  assert.doesNotMatch(todayView, /today-obsidian-link/);
+  assert.doesNotMatch(todayView, /Open today’s Daily Note in Obsidian/);
+  assert.doesNotMatch(todayView, /<Drawer\.Description/);
+  assert.doesNotMatch(todayView, /dangerouslySetInnerHTML/);
+  assert.match(styles, /\.today-view/);
+  assert.equal(styles.match(/--accent: #FE374B;/g)?.length, 2);
+  assert.match(styles, /\.today-note \{[^}]*margin: 0;/);
+  assert.match(styles, /\.today-note-header h2 \{[^}]*font-size: 15px;/);
+  assert.match(styles, /\.today-date-weekday \{[^}]*font-weight: 550;/);
+  assert.match(styles, /\.today-section--brief \{[^}]*padding-top: 18px;[^}]*border-top: 0;/);
+  assert.match(styles, /\.today-focus-card \{[^}]*padding: 17px 16px;/);
+  assert.match(styles, /\.today-focus-copy \{[^}]*font-size: 13px;[^}]*letter-spacing: -0\.01em;[^}]*line-height: 1\.3;/);
+  assert.match(styles, /\.today-focus-copy strong \{[^}]*font-weight: 550;/);
+  assert.match(styles, /\.runway-brand-logo/);
+  assert.doesNotMatch(styles, /today-date-orb/);
+  assert.match(styles, /\.today-brief-list \.safe-markdown li/);
+  assert.match(styles, /border-inline-start: 1px solid/);
+  assert.match(styles, /padding: 2px 0 2px 11px/);
+  assert.match(styles, /min-height: 0/);
+  assert.match(styles, /\/symbols\/video-fill\.png/);
+  assert.match(styles, /\/symbols\/circle\.png/);
+  assert.match(styles, /\.today-section \.safe-markdown/);
+  assert.match(readme, /Today is read-only/);
 });
 
 test("keeps Daily Note Markdown in native memory behind a narrow read-only bridge", async () => {

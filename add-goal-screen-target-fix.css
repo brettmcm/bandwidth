@@ -1,0 +1,224 @@
+/*
+ * AddGoalScreen.tsx compatibility layer.
+ *
+ * Keep this block after the existing Add Goal rules in target-app.css. Every
+ * selector is rooted to one of AddGoalScreen's three screen classes so the
+ * rest of the app keeps target-app.css's responsive behavior.
+ */
+
+/* Browse step */
+.add-goal-browse-screen {
+  padding-top: var(--app-safe-top);
+  background: var(--cds-color-background-default);
+}
+
+.add-goal-browse-screen .add-goal-browse-shell {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+  pointer-events: none;
+}
+
+.add-goal-browse-screen .add-goal-browse-shell > * {
+  pointer-events: auto;
+}
+
+.add-goal-browse-screen .add-goal-carousel-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.add-goal-browse-screen .add-goal-carousel-wrap:active {
+  cursor: grabbing;
+}
+
+.add-goal-browse-screen .add-goal-snap-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+}
+
+.add-goal-browse-screen .add-goal-browse-top {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  padding: var(--cds-size-padding-m) var(--cds-size-padding-l)
+    var(--cds-size-padding-s);
+}
+
+.add-goal-browse-screen .add-goal-close {
+  position: absolute;
+  top: var(--cds-size-padding-m);
+  right: var(--cds-size-padding-l);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--cds-size-corner-full);
+  background: var(--cds-color-bg-brand-secondary);
+  color: var(--cds-color-foreground-primary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.add-goal-browse-screen .add-goal-close:focus-visible {
+  box-shadow: var(--cds-shadow-focus-ring);
+  outline: none;
+}
+
+.add-goal-browse-screen .add-goal-headline {
+  margin: var(--cds-size-padding-l) 0 0;
+  color: var(--cds-color-foreground-primary);
+  font: var(--cds-type-display-medium);
+  letter-spacing: var(--cds-type-display-medium-tracking);
+  line-height: 1.05;
+}
+
+.add-goal-browse-screen .add-goal-hint {
+  margin: var(--cds-size-padding-xs) 0 0;
+  color: var(--cds-color-foreground-secondary);
+  font: var(--cds-type-body-medium);
+}
+
+.add-goal-browse-screen .add-goal-browse-cta {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  padding: var(--cds-size-padding-xs) var(--cds-size-padding-l)
+    var(--cds-size-padding-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-size-gap-xs);
+}
+
+/* Card surface shared by the browse and name steps */
+:is(.add-goal-browse-screen, .add-goal-name-screen) .add-goal-card {
+  width: 160px;
+  padding: var(--cds-size-padding-l) var(--cds-size-padding-m)
+    var(--cds-size-padding-m);
+  border-radius: var(--cds-size-corner-large);
+  background: var(--cds-color-background-default);
+  box-shadow: var(--cds-shadow-surface);
+  text-align: center;
+  transform-origin: center;
+}
+
+:is(.add-goal-browse-screen, .add-goal-name-screen) .add-goal-card-label {
+  margin: 0;
+  color: var(--cds-color-foreground-brand-primary);
+  font: var(--cds-type-body-large-strong);
+}
+
+/* Name step */
+.add-goal-name-screen .add-goal-name-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-size-gap-l);
+}
+
+.add-goal-name-screen .add-goal-name-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  flex: 1;
+  padding: var(--cds-size-padding-xl) var(--cds-size-padding-l);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--cds-size-gap-l);
+}
+
+.add-goal-name-screen .add-goal-name-hero {
+  width: min(240px, 60vw);
+  height: min(240px, 60vw);
+  margin: 0 auto;
+}
+
+.add-goal-name-screen .add-goal-name-input {
+  width: 100%;
+  padding: var(--cds-size-padding-xs) 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font: var(--cds-type-display-medium);
+  letter-spacing: var(--cds-type-display-medium-tracking);
+}
+
+.add-goal-name-screen .add-goal-name-input::placeholder {
+  color: var(--cds-color-foreground-tertiary);
+}
+
+.add-goal-name-screen .add-goal-name-input:focus {
+  outline: none;
+}
+
+/* Amount step. The safe-top value is kept here because target-app.css moved
+ * safe-area spacing from .app-screen into .screen-scroll. */
+.amount-screen .screen-scroll {
+  padding: var(--app-safe-top) 0 0;
+  gap: 0;
+}
+
+.amount-screen .amount-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.amount-screen .amount-product {
+  flex: 1;
+  padding: var(--cds-size-padding-l);
+  color: var(--cds-color-foreground-brand-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--cds-size-gap-m);
+}
+
+.amount-screen .amount-product-name {
+  margin: 0;
+  font: var(--cds-type-heading);
+}
+
+.amount-screen .amount-product-price {
+  margin: 0;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--cds-size-gap-xs);
+}
+
+.amount-screen .amount-dollars {
+  font: var(--cds-type-display-xlarge);
+  letter-spacing: var(--cds-type-display-xlarge-tracking);
+}
+
+.amount-screen .amount-cents {
+  font: var(--cds-type-display-large);
+  letter-spacing: var(--cds-type-display-large-tracking);
+}
+
+.amount-screen .number-pad {
+  padding: 0 var(--cds-size-padding-l);
+}
+
+.amount-screen .amount-step > .btn:last-child {
+  margin: var(--cds-size-padding-m) var(--cds-size-padding-l)
+    calc(var(--app-safe-bottom) + var(--cds-size-padding-s));
+}

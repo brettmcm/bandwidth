@@ -1,5 +1,22 @@
 import { Fragment, type JSX, type ReactNode } from "react";
 
+type ListPresentation = "default" | "schedule" | "tasks";
+
+function morningBriefListIcon(
+  item: string,
+  presentation: ListPresentation,
+  taskState?: "open" | "complete"
+) {
+  if (taskState === "complete") return "task-complete";
+  if (presentation === "tasks" || taskState === "open") return "task";
+  if (presentation !== "schedule") return null;
+
+  const normalized = item.toLowerCase();
+  if (/\b(zoom|meet|meeting|call|warmup|sync|review)\b/.test(normalized)) return "video";
+  if (/\b(focus|deep work|draft|write|writing|design)\b/.test(normalized)) return "focus";
+  return "calendar";
+}
+
 function safeLink(value: string) {
   try {
     const url = new URL(value);
@@ -81,7 +98,13 @@ function isBlockStart(line: string) {
   );
 }
 
-export function SafeMarkdown({ markdown }: { markdown: string }) {
+export function SafeMarkdown({
+  markdown,
+  listPresentation = "default",
+}: {
+  markdown: string;
+  listPresentation?: ListPresentation;
+}) {
   const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
   const blocks: ReactNode[] = [];
   let index = 0;
@@ -139,10 +162,24 @@ export function SafeMarkdown({ markdown }: { markdown: string }) {
         <ul key={`list-${index}`}>
           {items.map((item, itemIndex) => {
             const task = item.match(/^\[([ xX])\]\s*(.*)$/);
+            const taskState = task ? (task[1] === " " ? "open" : "complete") : undefined;
+            const icon = morningBriefListIcon(item, listPresentation, taskState);
+            const className = [
+              task ? "markdown-task" : "",
+              icon ? "markdown-list-item--decorated" : "",
+            ].filter(Boolean).join(" ") || undefined;
             return (
-              <li key={itemIndex} className={task ? "markdown-task" : undefined}>
-                {task ? <span aria-hidden="true">{task[1] === " " ? "○" : "●"}</span> : null}
-                {inlineMarkdown(task?.[2] ?? item, `list-${index}-${itemIndex}`)}
+              <li key={itemIndex} className={className}>
+                {icon ? (
+                  <span
+                    className={`markdown-item-symbol markdown-item-symbol--${icon}`}
+                    data-symbol={icon}
+                    aria-hidden="true"
+                  />
+                ) : null}
+                <span className="markdown-list-copy">
+                  {inlineMarkdown(task?.[2] ?? item, `list-${index}-${itemIndex}`)}
+                </span>
               </li>
             );
           })}
@@ -163,7 +200,11 @@ export function SafeMarkdown({ markdown }: { markdown: string }) {
       blocks.push(
         <ol key={`ordered-${index}`}>
           {items.map((item, itemIndex) => (
-            <li key={itemIndex}>{inlineMarkdown(item, `ordered-${index}-${itemIndex}`)}</li>
+            <li key={itemIndex}>
+              <span className="markdown-list-copy">
+                {inlineMarkdown(item, `ordered-${index}-${itemIndex}`)}
+              </span>
+            </li>
           ))}
         </ol>
       );

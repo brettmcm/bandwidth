@@ -23,6 +23,7 @@ import {
 } from "./days-view";
 import { monthLabel } from "./calendar";
 import { splitDailyNote } from "./daily-note";
+import { TodayView } from "./today-view";
 
 declare global {
   interface Window {
@@ -84,7 +85,7 @@ type Draft = {
   obsidianUrl: string;
 };
 
-type RunwayView = "timeline" | "area" | "days";
+type RunwayView = "today" | "timeline" | "area" | "days";
 
 const DAY = 86_400_000;
 const TIMELINE_BUFFER_DAYS = 7;
@@ -100,7 +101,7 @@ const ITEM_LANE_GAP_WIDTH = 44;
 const TIMELINE_MAGNIFY_EVENT = "bandwidth:timeline-magnify";
 const APP_ACTIVE_EVENT = "bandwidth:app-active";
 const WORK_HISTORY_START_ON = "2026-07-06";
-const RUNWAY_VIEWS: RunwayView[] = ["timeline", "area", "days"];
+const RUNWAY_VIEWS: RunwayView[] = ["today", "timeline", "area", "days"];
 const TIMELINE_DRAG_THRESHOLD = 4;
 const TIMELINE_DECELERATION_RATE = 0.998;
 const TIMELINE_MOMENTUM_MIN_VELOCITY = 0.01;
@@ -287,7 +288,7 @@ function projectSizeLabel(value: string | null | undefined) {
 
 export function WorkloadClient() {
   const [data, setData] = useState<WorkloadResponse | null>(null);
-  const [activeView, setActiveView] = useState<RunwayView>("timeline");
+  const [activeView, setActiveView] = useState<RunwayView>("today");
   const [dailyNotes, setDailyNotes] = useState<DailyNote[]>([]);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
   const [daysMonth, setDaysMonth] = useState<string | null>(null);
@@ -389,19 +390,13 @@ export function WorkloadClient() {
   }, [load]);
 
   useEffect(() => {
-    if (!today) return;
-    const request = window.setTimeout(() => void loadDays(today), 0);
-    return () => window.clearTimeout(request);
-  }, [loadDays, today]);
-
-  useEffect(() => {
-    if (activeView !== "days" || !today) return;
+    if ((activeView !== "today" && activeView !== "days") || !today) return;
     const request = window.setTimeout(() => void loadDays(today), 0);
     return () => window.clearTimeout(request);
   }, [activeView, loadDays, today]);
 
   useEffect(() => {
-    if (activeView !== "days" || !today) return;
+    if ((activeView !== "today" && activeView !== "days") || !today) return;
     let reloadTimer: number | null = null;
     const reload = () => {
       if (reloadTimer !== null) window.clearTimeout(reloadTimer);
@@ -588,6 +583,7 @@ export function WorkloadClient() {
   const activeDay = dayDrawerDate && today && dayDrawerDate <= today
     ? dayDrawerDate
     : timelineToday;
+  const todayNote = dailyNotes.find((note) => note.date === timelineToday);
   const activeDayNote = dailyNotes.find((note) => note.date === activeDay);
   const activeDayCompletions = (completedByDate.get(activeDay) ?? []).sort((a, b) =>
     b.completedAt.localeCompare(a.completedAt)
@@ -596,11 +592,26 @@ export function WorkloadClient() {
   const monthlyCompletionCount = Array.from(completedByDate.entries())
     .filter(([date]) => date.startsWith(daysCalendarMonth))
     .reduce((count, [, items]) => count + items.length, 0);
-  const runwaySummary = activeView === "days"
-    ? `${monthLabel(daysCalendarMonth)} · ${
-        notesState === "unavailable" ? "Notes local only" : `${monthlyNoteCount} notes`
-      } · ${monthlyCompletionCount} completed`
-    : `${dateWindow(today, latestTaskDate)} · ${timelineItems.length} commitments · ${productCount} product areas`;
+  const todaySections = splitDailyNote(todayNote?.markdown ?? "");
+  const runwaySummary = activeView === "today"
+    ? `${compactDate(timelineToday)} · ${
+        notesState === "loading"
+          ? "Reading Deep Thought…"
+          : notesState === "unavailable"
+            ? "Notes local only"
+            : notesState === "error"
+              ? "Deep Thought unavailable"
+              : todaySections.planned
+                ? "Morning Brief ready"
+                : todayNote
+                  ? "Daily Note ready"
+                  : "No Daily Note yet"
+      }`
+    : activeView === "days"
+      ? `${monthLabel(daysCalendarMonth)} · ${
+          notesState === "unavailable" ? "Notes local only" : `${monthlyNoteCount} notes`
+        } · ${monthlyCompletionCount} completed`
+      : `${dateWindow(today, latestTaskDate)} · ${timelineItems.length} commitments · ${productCount} product areas`;
 
   const openDayRecord = (date: string) => {
     setDaysMonth(date.slice(0, 7));
@@ -1081,18 +1092,35 @@ export function WorkloadClient() {
     }
   };
 
-  const refreshAsana = async () => {
+  const refreshAll = async () => {
     setRefreshing(true);
     try {
-      const response = await fetch("/api/workload/refresh", { method: "POST" });
-      const result = (await response.json()) as {
-        error?: string;
-        count?: number;
-        historyCount?: number;
-        removedCount?: number;
-      };
-      if (!response.ok) throw new Error(result.error ?? "Asana refresh failed");
-      await load();
+      const workloadRefresh = (async () => {
+        const response = await fetch("/api/workload/refresh", { method: "POST" });
+        const result = (await response.json()) as {
+          error?: string;
+          count?: number;
+          historyCount?: number;
+          removedCount?: number;
+        };
+        if (!response.ok) throw new Error(result.error ?? "Asana refresh failed");
+        await load();
+        return result;
+      })();
+      const dailyContextRefresh = today ? loadDays(today) : Promise.resolve();
+      const [workloadResult, dailyContextResult] = await Promise.allSettled([
+        workloadRefresh,
+        dailyContextRefresh,
+      ]);
+
+      if (workloadResult.status === "rejected") {
+        throw workloadResult.reason;
+      }
+      if (dailyContextResult.status === "rejected") {
+        throw dailyContextResult.reason;
+      }
+
+      const result = workloadResult.value;
       const removed = result.removedCount ?? 0;
       toast.success(
         `${result.count ?? 0} official requests refreshed${
@@ -1100,15 +1128,10 @@ export function WorkloadClient() {
         }`
       );
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Asana refresh failed");
+      toast.error(error instanceof Error ? error.message : "Bandwidth refresh failed");
     } finally {
       setRefreshing(false);
     }
-  };
-
-  const refreshCurrentView = async () => {
-    await refreshAsana();
-    if (activeView === "days" && today) await loadDays(today);
   };
 
   const openBlackouts = () => {
@@ -1178,13 +1201,23 @@ export function WorkloadClient() {
   return (
     <main className="runway-shell">
       <header className="runway-header">
-        <div>
-          <h1>Bandwidth</h1>
-          <p className="runway-summary">
-            {today
-              ? runwaySummary
-              : "Loading runway…"}
-          </p>
+        <div className="runway-brand">
+          <picture className="runway-brand-logo">
+            <img
+              src="/brands/bandwidth-logo-color.png"
+              alt=""
+              width="183"
+              height="159"
+            />
+          </picture>
+          <div>
+            <h1>Bandwidth</h1>
+            <p className="runway-summary">
+              {today
+                ? runwaySummary
+                : "Loading runway…"}
+            </p>
+          </div>
         </div>
         <div className="runway-actions" aria-label="Runway actions">
           <button
@@ -1202,10 +1235,10 @@ export function WorkloadClient() {
           <button
             className="icon-action runway-icon-action"
             type="button"
-            onClick={() => void refreshCurrentView()}
+            onClick={() => void refreshAll()}
             disabled={refreshing}
-            aria-label={refreshing ? "Refreshing" : activeView === "days" ? "Refresh Days" : "Refresh Asana"}
-            title={refreshing ? "Refreshing…" : activeView === "days" ? "Refresh Days" : "Refresh Asana"}
+            aria-label={refreshing ? "Refreshing everything" : "Refresh everything"}
+            title={refreshing ? "Refreshing everything…" : "Refresh everything"}
           >
             <svg className={refreshing ? "refresh-icon refresh-icon--spinning" : "refresh-icon"} viewBox="0 0 24 24" aria-hidden="true">
               <path d="M20 6v5h-5M4 18v-5h5" />
@@ -1239,6 +1272,18 @@ export function WorkloadClient() {
             }}
           >
             <button
+              className={`runway-tab${activeView === "today" ? " runway-tab--active" : ""}`}
+              type="button"
+              role="tab"
+              id="today-tab"
+              aria-controls="today-panel"
+              aria-selected={activeView === "today"}
+              tabIndex={activeView === "today" ? 0 : -1}
+              onClick={() => setActiveView("today")}
+            >
+              Today
+            </button>
+            <button
               className={`runway-tab${activeView === "timeline" ? " runway-tab--active" : ""}`}
               type="button"
               role="tab"
@@ -1260,7 +1305,7 @@ export function WorkloadClient() {
               tabIndex={activeView === "area" ? 0 : -1}
               onClick={() => setActiveView("area")}
             >
-              Area
+              Areas
             </button>
             <button
               className={`runway-tab${activeView === "days" ? " runway-tab--active" : ""}`}
@@ -1272,9 +1317,24 @@ export function WorkloadClient() {
               tabIndex={activeView === "days" ? 0 : -1}
               onClick={() => setActiveView("days")}
             >
-              Days
+              Logs
             </button>
           </div>
+
+          <section
+            className="runway-field today-field"
+            id="today-panel"
+            role="tabpanel"
+            aria-labelledby="today-tab"
+            hidden={activeView !== "today"}
+          >
+            <TodayView
+              date={today}
+              note={todayNote}
+              notesState={notesState}
+              notesError={notesError}
+            />
+          </section>
 
           <section
             className="runway-field"
@@ -1529,15 +1589,23 @@ export function WorkloadClient() {
             </Command.Item>
             <Command.Item
               disabled={refreshing}
-              value="Refresh Asana"
-              keywords={["sync", "official requests"]}
-              onSelect={() => runCommand(refreshAsana)}
+              value="Refresh everything"
+              keywords={["sync", "official requests", "daily notes", "history"]}
+              onSelect={() => runCommand(refreshAll)}
             >
               <span className="command-item-mark" aria-hidden="true">↻</span>
-              <span>{refreshing ? "Refreshing Asana…" : "Refresh Asana"}</span>
+              <span>{refreshing ? "Refreshing everything…" : "Refresh everything"}</span>
             </Command.Item>
             <Command.Item
-              value="Open Days"
+              value="Open Today"
+              keywords={["morning brief", "daily note", "hello", "plan"]}
+              onSelect={() => runCommand(() => setActiveView("today"))}
+            >
+              <span className="command-item-mark" aria-hidden="true">☀</span>
+              <span>Open Today</span>
+            </Command.Item>
+            <Command.Item
+              value="Open Logs"
               keywords={["history", "daily notes", "calendar", "completed", "reflection"]}
               onSelect={() => runCommand(() => {
                 if (today) setDaysMonth(today.slice(0, 7));
@@ -1545,7 +1613,7 @@ export function WorkloadClient() {
               })}
             >
               <span className="command-item-mark" aria-hidden="true">◫</span>
-              <span>Open Days</span>
+              <span>Open Logs</span>
             </Command.Item>
           </Command.Group>
           {dayDates.length ? (

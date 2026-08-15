@@ -273,3 +273,157 @@ final result: passed
 No actionable P0, P1, or P2 differences remain. The blackout now uses the same one-pixel `var(--line)` border on all four sides. The focused comparison confirms the new top and bottom edges while the fill, corner radius, label, width, and existing left/right edges remain unchanged. Fonts and typography, spacing and layout rhythm, colors and visual tokens, image quality and asset fidelity, and app-specific copy are unchanged. Lint, build, and all three rendered-output tests pass.
 
 final result: passed
+
+# Today focus profile design QA
+
+- Source visual truth: `/var/folders/nb/2pcql9n15m1dbx7_tbwnfjrr0000gn/T/codex-clipboard-00c9e266-79c2-457a-8307-2e81eb0b44e8.png`
+- Collapsed implementation: `/Users/bmcmillin/Apps/Bandwidth/today-focus-collapsed.png`
+- Drawer implementation: `/Users/bmcmillin/Apps/Bandwidth/today-focus-drawer.png`
+- Combined comparison: `/Users/bmcmillin/Apps/Bandwidth/today-focus-comparison.png`
+- Browser-rendered viewport: 1280 × 720 CSS px at device scale factor 1
+- Source pixels: 2964 × 1726
+- Implementation pixels: 1280 × 720 for each captured state
+- Density normalization: the source was proportionally resized to 1280 px wide in the combined comparison; the implementation was captured at its native CSS size and density.
+- States: Today view with the focus card closed; Today view with the focus profile drawer open.
+
+## Full-view comparison evidence
+
+The source was used as a content-structure reference, not as a pixel-for-pixel visual target. Both source and implementation make the primary outcome the first prominent element and preserve the same supporting hierarchy: Overview, Key facts, and What success looks like. The final interaction intentionally uses Bandwidth's established right-side drawer instead of the source's inline expansion, following the user's revised direction. The Today column begins at the same horizontal position as the tabs and remains free of horizontal overflow.
+
+## Focused region comparison evidence
+
+The drawer capture makes the important content region readable at full size. Its title, primary-focus context, three profile subsections, close control, overlay, and panel proportions were reviewed directly. The collapsed capture separately confirms the borderless Areas-style surface, absence of visible “View profile” language, and reduced bold weight. No additional crop was needed because both focus states are fully legible in their 1280 × 720 captures.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Bandwidth's existing UI and brand fonts are retained. The primary outcome uses weight 500 so it stays emphasized without competing with the date or drawer title. Heading sizes and line heights remain consistent with existing SafeMarkdown and drawer styles.
+- Spacing and layout rhythm: the Today note, tabs, and focus card share the same left edge. Card padding and radius follow the Areas card pattern. Desktop, 720 px, and 360 px widths were checked with no horizontal overflow; the 360 px card ran from 18 px to 342 px and the drawer from 12 px to 348 px.
+- Colors and visual tokens: the focus card uses `--area-card-surface` with no border. The drawer reuses Bandwidth's existing surface, overlay, elevation, and foreground tokens.
+- Image quality and asset fidelity: no new imagery or decorative assets were introduced. The existing Obsidian brand asset remains sharp at its established 12 px size and uses the same treatment as Timeline drawer source links.
+- Copy and content: “Daily Note,” “Morning Brief,” and visible “View profile” labels are absent from the Today content. The drawer preserves Overview, Key facts, and What success looks like verbatim from the Daily Note Markdown.
+
+## Findings
+
+No actionable P0, P1, or P2 differences remain. The implementation intentionally adapts the reference's content structure to Bandwidth's established interaction and visual system.
+
+## Comparison history
+
+### Iteration 1
+
+- Earlier P2 finding: the first pass expanded the profile inline, displayed “View profile,” and used a bordered card. That changed the layout when opened and did not match the revised product direction.
+- Fixes made: replaced inline expansion with the existing Vaul right-side drawer, removed the visible affordance text and card border, switched the surface to `--area-card-surface`, and reduced the emphasized outcome from weight 600 to 500.
+- Post-fix evidence: `today-focus-collapsed.png` and `today-focus-drawer.png` show the final states; `today-focus-comparison.png` places the reference and final drawer state in one comparison artifact.
+
+## Interaction and runtime checks
+
+- Clicking the primary-focus card opens the Focus profile drawer.
+- The close control dismisses the drawer.
+- The card has an accessible action name even though no visible action label is shown.
+- The drawer exposes a dialog title and labeled details region.
+- Browser console checked with no warnings or errors.
+- Desktop, tablet-width, and compact-width layouts checked without page overflow.
+
+## Follow-up polish
+
+No P3 follow-up is required for this scope.
+
+final result: passed
+
+# Today redundant-element removal QA
+
+- Source visual truths: `/var/folders/nb/2pcql9n15m1dbx7_tbwnfjrr0000gn/T/codex-clipboard-9dcb9aac-036b-4b91-b315-8d56ea25663c.png` and `/var/folders/nb/2pcql9n15m1dbx7_tbwnfjrr0000gn/T/codex-clipboard-5bb872ae-8774-4db8-84c3-7a9dbb0c06b6.png`
+- Collapsed implementation: `/Users/bmcmillin/Apps/Bandwidth/today-elements-removed-collapsed.png`
+- Drawer implementation: `/Users/bmcmillin/Apps/Bandwidth/today-elements-removed-drawer.png`
+- Focused comparison: `/Users/bmcmillin/Apps/Bandwidth/today-elements-removed-comparison.png`
+- Viewport: 1280 × 720 CSS px at device scale factor 1
+- Source pixels: 1682 × 1526 and 1048 × 1908
+- Implementation pixels: 1280 × 720 for each state
+- Density normalization: targeted source and implementation regions were cropped and fit into matching 640 × 260 comparison cells without stretching.
+- States: Today view with the focus card closed; Focus profile drawer open.
+
+## Full-view comparison evidence
+
+The collapsed implementation removes the Obsidian source button below the date while preserving the date, divider, focus card, and left alignment. The open implementation removes the repeated primary-focus sentence from the drawer header while preserving the Focus profile title, close control, and all profile content.
+
+## Focused region comparison evidence
+
+`today-elements-removed-comparison.png` places each annotated source region beside its corresponding final region. The upper pair shows the Today header before and after the Obsidian button removal. The lower pair shows the drawer header before and after removing the repeated focus sentence. Both requested removals are directly visible at readable size.
+
+## Required fidelity surfaces
+
+- Fonts and typography: remaining date, drawer title, section headings, and body typography are unchanged; removing the repeated sentence tightens the drawer hierarchy.
+- Spacing and layout rhythm: the Today header closes naturally around the date and divider. The drawer content moves upward without leaving an empty description gap.
+- Colors and visual tokens: existing Today, card, overlay, and drawer tokens are unchanged. The implementation capture uses the active dark system theme while the supplied annotations use light mode; this does not affect the requested removals.
+- Image quality and asset fidelity: the removed Obsidian mark was the existing supplied vector asset. No replacement asset, approximation, or placeholder was introduced.
+- Copy and content: the visible Obsidian label and duplicated primary-focus sentence are absent. The canonical primary-focus card and the complete Overview, Key facts, and What success looks like content remain.
+
+## Findings
+
+No actionable P0, P1, or P2 differences remain for the annotated scope.
+
+## Comparison history
+
+- Earlier P2 finding: the Today header exposed an unnecessary source button, and the drawer repeated content already visible in the focus card.
+- Fixes made: removed the Today-only Obsidian link and its image import, removed the drawer description, deleted now-unused drawer-description styling, and updated the Today documentation and tests.
+- Post-fix evidence: `today-elements-removed-collapsed.png`, `today-elements-removed-drawer.png`, and the focused combined comparison above.
+
+## Interaction and runtime checks
+
+- The focus card still opens the Focus profile drawer.
+- The close control still dismisses the drawer.
+- The drawer retains an accessible title and labeled details region.
+- Browser console checked with no warnings or errors.
+- Lint, production build, and all 31 rendered-output tests pass.
+
+## Follow-up polish
+
+No P3 follow-up is required for this scope.
+
+final result: passed
+
+# Morning Brief item-detail QA
+
+- Source visual truth: `/var/folders/nb/2pcql9n15m1dbx7_tbwnfjrr0000gn/T/codex-clipboard-0e573ef9-c7ed-4ca2-b165-825e5d6c7303.png`
+- Browser-rendered implementation: `/Users/bmcmillin/Apps/Bandwidth/today-symbols-implementation-compact.png`
+- Viewport: 1280 × 720 CSS px, dark mode, device scale factor 1
+- Source pixels: 2580 × 1920; no CSS size or density metadata supplied
+- Implementation pixels: 1280 × 720 at the matching 1280 × 720 CSS viewport; no density normalization required
+- State: Today view with two scheduled items and four key tasks, focus profile closed
+
+## Full-view comparison evidence
+
+The source and implementation were opened together in one comparison input. The implementation preserves Bandwidth’s existing page hierarchy while reproducing the requested detail treatment: every indented schedule and task row has its own low-contrast one-pixel left rule, a compact leading symbol, and aligned text. There is no horizontal overflow or collision with long task copy.
+
+## Focused region comparison evidence
+
+A separate crop was not needed because the source is already a close-up and the 16 px symbols, 1 px rules, and 13 px copy remain readable in the 1280 × 720 implementation capture. Browser measurements confirmed all six decorated rows render at 26.09375 px high, with exactly 2 px top and bottom padding and a measured 12 px from each row’s bordered edge to its icon.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the existing Bandwidth UI and brand fonts, weights, sizes, line heights, emphasis, and wrapping remain unchanged. The new symbol track does not split inline bold text or change copy hierarchy.
+- Spacing and layout rhythm: each row uses 2 px top and bottom padding, a measured 12 px border-to-icon offset, a 16 px icon track, and a 12 px icon-to-copy gap. Removing the former 38 px minimum height allows the requested compact padding to determine the row height. The rules remain separated per item instead of forming a heavy continuous rail.
+- Colors and visual tokens: the rule mixes the existing `--line` token to 58% opacity and the symbols use `--tertiary`, preserving the reference’s deliberately quiet contrast in dark mode and mapping naturally to light mode.
+- Image quality and asset fidelity: Apple SF Symbols are rendered as high-resolution template PNGs and tinted through CSS masks. The live browser resolved `video.fill`, `circle.dotted`, and `circle` assets without placeholders or custom-drawn icon substitutions.
+- Copy and content: the Morning Brief text is unchanged. Semantic icon selection maps meeting-like schedule items to video, focus/work blocks to the dotted focus mark, other schedule entries to calendar, and key tasks to the open task circle.
+
+## Findings
+
+No actionable P0, P1, or P2 differences remain for the requested item treatment.
+
+## Interaction and runtime checks
+
+- The primary-focus card still opens and closes the Focus profile drawer.
+- All six visible list rows expose a resolved symbol asset and the same subtle border treatment.
+- Browser console checked with no errors or warnings.
+- Lint, production build, and all 31 rendered-output tests pass.
+
+## Comparison history
+
+- Iteration 1: the initial item treatment passed with 8 px vertical padding, a measured 18 px border-to-icon offset, and a 38 px minimum row height.
+- Iteration 2: the user requested tighter geometry. The rows now use 2 px top and bottom padding, no minimum-height floor, and an 11 px CSS inset after the 1 px border, producing the requested measured 12 px border-to-icon distance. Post-fix evidence is `/Users/bmcmillin/Apps/Bandwidth/today-symbols-implementation-compact.png`.
+
+## Follow-up polish
+
+No P3 follow-up is required for this scope.
+
+final result: passed

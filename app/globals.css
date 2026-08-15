@@ -21,7 +21,7 @@
   --muted: #626b77;
   --tertiary: #9299a3;
   --line: #dfe3e8;
-  --accent: #e63e18;
+  --accent: #FE374B;
   --alert: #b92a16;
   --review: #8a5b00;
   --review-surface: #fff8db;
@@ -46,7 +46,7 @@
     --muted: #9299a3;
     --tertiary: #626b77;
     --line: #252a31;
-    --accent: #ff4b22;
+    --accent: #FE374B;
     --alert: #ff7055;
     --review: #f2c14e;
     --review-surface: #211b0e;
@@ -130,6 +130,26 @@ textarea:focus-visible {
   align-items: flex-start;
   justify-content: space-between;
   gap: 32px;
+}
+
+.runway-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.runway-brand-logo {
+  display: block;
+  width: 54px;
+  flex: 0 0 54px;
+  line-height: 0;
+}
+
+.runway-brand-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .runway-header h1,
@@ -303,6 +323,266 @@ textarea:focus-visible {
   margin-top: clamp(28px, 4vh, 40px);
 }
 
+.today-field {
+  overflow: hidden;
+}
+
+.today-view {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px 0 56px;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.today-view::-webkit-scrollbar {
+  display: none;
+}
+
+.today-note {
+  width: min(760px, 100%);
+  margin: 0;
+}
+
+.today-note-header {
+  padding-bottom: 0;
+}
+
+.today-section-label {
+  color: var(--tertiary);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.today-note-header h2 {
+  color: var(--interaction);
+  font-family: var(--font-brand);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.today-date-weekday {
+  font-weight: 550;
+}
+
+.today-date-calendar {
+  font-weight: 400;
+}
+
+.today-section,
+.today-empty {
+  padding: 26px 0 4px;
+  border-top: 1px solid var(--line);
+}
+
+.today-section--brief {
+  padding-top: 18px;
+  border-top: 0;
+}
+
+.today-section + .today-section {
+  margin-top: 28px;
+}
+
+.today-section-label {
+  margin-bottom: 20px;
+}
+
+.today-focus-card {
+  display: block;
+  width: 100%;
+  min-height: 62px;
+  padding: 17px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--area-card-surface);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.today-focus-card--static {
+  cursor: default;
+}
+
+.today-focus-card:hover .today-focus-copy strong,
+.today-focus-card:focus-visible .today-focus-copy strong {
+  color: var(--accent);
+}
+
+.today-focus-card--static:hover .today-focus-copy strong {
+  color: var(--interaction);
+}
+
+.today-focus-copy {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.today-focus-copy strong {
+  color: var(--interaction);
+  font-weight: 550;
+  transition: color 120ms ease;
+}
+
+.today-focus-drawer-view {
+  padding-bottom: 24px;
+}
+
+.today-focus-drawer-section {
+  padding-top: 8px;
+  border-top: 0;
+}
+
+.today-focus-drawer-section .safe-markdown {
+  max-width: none;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.today-focus-drawer-section .safe-markdown > * + * {
+  margin-top: 18px;
+}
+
+.today-focus-card + .today-shape,
+.today-focus-card + .today-key-tasks,
+.today-focus-card + .safe-markdown {
+  margin-top: 30px;
+}
+
+.today-shape + .today-key-tasks,
+.today-key-tasks + .safe-markdown {
+  margin-top: 30px;
+}
+
+.today-key-tasks h3 {
+  color: var(--interaction);
+  font-family: var(--font-brand);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.today-key-tasks h3 + .safe-markdown {
+  margin-top: 18px;
+}
+
+.today-section .safe-markdown {
+  max-width: none;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.today-section .safe-markdown > * + * {
+  margin-top: 18px;
+}
+
+.today-section .safe-markdown h1,
+.today-section .safe-markdown h2 {
+  font-size: 17px;
+}
+
+.today-section .safe-markdown li + li {
+  margin-top: 12px;
+}
+
+.today-brief-list .safe-markdown ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.today-brief-list .safe-markdown li,
+.today-brief-list .safe-markdown .markdown-task {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  min-height: 0;
+  margin-left: 0;
+  padding: 2px 0 2px 11px;
+  border-inline-start: 1px solid color-mix(in srgb, var(--line) 58%, transparent);
+  color: var(--muted);
+  list-style: none;
+}
+
+.today-brief-list .safe-markdown li + li {
+  margin-top: 0;
+}
+
+.today-brief-list .markdown-list-copy {
+  min-width: 0;
+}
+
+.markdown-item-symbol {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  background: currentColor;
+  color: var(--tertiary);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.markdown-item-symbol--calendar {
+  -webkit-mask-image: url("/symbols/calendar.png");
+  mask-image: url("/symbols/calendar.png");
+}
+
+.markdown-item-symbol--video {
+  -webkit-mask-image: url("/symbols/video-fill.png");
+  mask-image: url("/symbols/video-fill.png");
+}
+
+.markdown-item-symbol--focus {
+  -webkit-mask-image: url("/symbols/circle-dotted.png");
+  mask-image: url("/symbols/circle-dotted.png");
+}
+
+.markdown-item-symbol--task {
+  -webkit-mask-image: url("/symbols/circle.png");
+  mask-image: url("/symbols/circle.png");
+}
+
+.markdown-item-symbol--task-complete {
+  -webkit-mask-image: url("/symbols/checkmark-circle-fill.png");
+  mask-image: url("/symbols/checkmark-circle-fill.png");
+  color: var(--accent);
+}
+
+.today-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.today-empty-mark {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border: 1px solid var(--tertiary);
+  border-radius: 50%;
+}
+
 .area-scroller {
   width: 100%;
   min-height: 0;
@@ -331,7 +611,7 @@ textarea:focus-visible {
   min-width: 0;
   min-height: 100%;
   flex-direction: column;
-  padding: 20px 18px;
+  padding: 0;
   border-radius: 8px;
   background: transparent;
 }
@@ -641,9 +921,8 @@ textarea:focus-visible {
   list-style: none;
 }
 
-.safe-markdown .markdown-task > span {
+.safe-markdown .markdown-task > .markdown-item-symbol {
   color: var(--accent);
-  font-size: 8px;
 }
 
 .safe-markdown a {
@@ -723,10 +1002,6 @@ textarea:focus-visible {
 @media (max-width: 480px) {
   .runway-shell {
     --runway-inline-padding: 20px;
-  }
-
-  .area-column {
-    padding: 18px 16px;
   }
 
   .area-card {
