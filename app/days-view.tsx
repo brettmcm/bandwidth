@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Drawer } from "vaul";
 import { SafeMarkdown } from "./safe-markdown";
 import {
+  hasEndOfDayBriefContent,
   splitDailyNote,
   type DailyNote,
   type HistoryItem,
@@ -44,7 +45,11 @@ export function DaysView({
   onChangeMonth,
   onOpenDate,
 }: DaysViewProps) {
-  const noteDates = new Set(notes.map((note) => note.date));
+  const reflectedDates = new Set(
+    notes
+      .filter((note) => hasEndOfDayBriefContent(note.markdown))
+      .map((note) => note.date)
+  );
   const previousMonth = shiftMonth(visibleMonth, -1);
   const nextMonth = shiftMonth(visibleMonth, 1);
   const firstMonth = minimumDate.slice(0, 7);
@@ -82,20 +87,20 @@ export function DaysView({
         ))}
         {calendarDates(visibleMonth).map((date, index) => {
           if (!date) return <div className="calendar-day-spacer" role="gridcell" key={`empty-${index}`} />;
-          const hasNote = noteDates.has(date);
+          const hasReflection = reflectedDates.has(date);
           const disabled = date < minimumDate || date > today;
           return (
             <button
-              className={`calendar-day${date === today ? " calendar-day--today" : ""}${hasNote ? " calendar-day--noted" : ""}`}
+              className={`calendar-day${date === today ? " calendar-day--today" : ""}${hasReflection ? " calendar-day--noted" : ""}`}
               type="button"
               role="gridcell"
               key={date}
               disabled={disabled}
-              aria-label={`${fullDate(date)}${hasNote ? ", Daily Note logged" : ", no Daily Note"}`}
+              aria-label={`${fullDate(date)}${hasReflection ? ", End Of Day Brief recorded" : ", no End Of Day Brief"}`}
               onClick={() => onOpenDate(date)}
             >
               <span className="calendar-day-number">{Number(date.slice(-2))}</span>
-              {hasNote ? <span className="calendar-note-indicator" aria-hidden="true" /> : null}
+              {hasReflection ? <span className="calendar-note-indicator" aria-hidden="true" /> : null}
             </button>
           );
         })}
@@ -106,7 +111,7 @@ export function DaysView({
           {notesState === "loading"
             ? "Reading Deep Thought…"
             : notesState === "unavailable"
-              ? "Daily Note indicators are available in the local Mac app."
+              ? "End Of Day indicators are available in the local Mac app."
               : notesError || "Deep Thought is unavailable."}
         </p>
       ) : null}

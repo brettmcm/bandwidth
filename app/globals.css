@@ -29,7 +29,7 @@
   --floating-panel-gap: 12px;
   --floating-panel-radius: 8px;
   --font-brand: "indivisible", "Indivisible", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-ui: "InterVariable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Departure Mono", "SFMono-Regular", Consolas, monospace;
 }
 
@@ -369,7 +369,7 @@ textarea:focus-visible {
 }
 
 .today-date-weekday {
-  font-weight: 550;
+  font-weight: 500;
 }
 
 .today-date-calendar {
@@ -431,7 +431,7 @@ textarea:focus-visible {
 
 .today-focus-copy strong {
   color: var(--interaction);
-  font-weight: 550;
+  font-weight: 500;
   transition: color 120ms ease;
 }
 
@@ -620,7 +620,7 @@ textarea:focus-visible {
   color: var(--interaction);
   font-family: var(--font-brand);
   font-size: 15px;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
@@ -670,7 +670,7 @@ textarea:focus-visible {
   overflow: hidden;
   color: var(--interaction);
   font-size: 13px;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.3;
   text-overflow: ellipsis;
@@ -850,7 +850,7 @@ textarea:focus-visible {
   top: -2px;
   color: var(--interaction);
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 500;
   line-height: 1.4;
   text-decoration: none;
 }
@@ -888,7 +888,7 @@ textarea:focus-visible {
 .safe-markdown h6 {
   color: var(--interaction);
   font-family: var(--font-brand);
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1.3;
 }
@@ -1219,7 +1219,7 @@ textarea:focus-visible {
   overflow: hidden;
   color: var(--interaction);
   font-size: 14px;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -0.012em;
   line-height: 1.35;
   text-overflow: ellipsis;
@@ -1704,7 +1704,7 @@ textarea:focus-visible {
 .schedule-decision-heading h4 {
   color: var(--canvas);
   font-size: 12px;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: -0.005em;
   line-height: 1.35;
 }
@@ -1784,7 +1784,7 @@ textarea:focus-visible {
 .date-review-heading h4 {
   color: var(--review);
   font-size: 11px;
-  font-weight: 650;
+  font-weight: 600;
   line-height: 1.3;
 }
 
@@ -1813,7 +1813,7 @@ textarea:focus-visible {
   margin-top: 4px;
   color: var(--interaction);
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 500;
   line-height: 1.35;
 }
 

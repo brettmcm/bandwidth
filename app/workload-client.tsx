@@ -126,6 +126,27 @@ type TimelineDrag = {
   moved: boolean;
 };
 
+function localDailyNotesReader() {
+  if (typeof window === "undefined") return undefined;
+  if (!["127.0.0.1", "localhost"].includes(window.location.hostname)) return undefined;
+
+  const appPort = Number(window.location.port || "80");
+  if (!Number.isInteger(appPort) || appPort < 1 || appPort >= 65_535) return undefined;
+  const endpoint = `http://127.0.0.1:${appPort + 1}/api/daily-notes`;
+
+  return async () => {
+    const response = await fetch(endpoint, { cache: "no-store" });
+    const result = (await response.json().catch(() => ({}))) as {
+      notes?: DailyNote[];
+      error?: string;
+    };
+    if (!response.ok) {
+      throw new Error(result.error ?? "Deep Thought is unavailable.");
+    }
+    return result.notes ?? [];
+  };
+}
+
 function rubberBandDistance(distance: number, dimension: number) {
   if (distance === 0) return 0;
   const size = Math.max(1, dimension);
@@ -346,13 +367,13 @@ export function WorkloadClient() {
       return result.items ?? [];
     });
 
-    const noteBridge = window.bandwidth?.listDailyNotes;
-    if (noteBridge) setNotesState("loading");
+    const noteReader = window.bandwidth?.listDailyNotes ?? localDailyNotesReader();
+    if (noteReader) setNotesState("loading");
     else setNotesState("unavailable");
 
     const [historyResult, notesResult] = await Promise.allSettled([
       historyRequest,
-      noteBridge ? noteBridge() : Promise.resolve<DailyNote[]>([]),
+      noteReader ? noteReader() : Promise.resolve<DailyNote[]>([]),
     ]);
 
     if (historyResult.status === "fulfilled") {
@@ -364,7 +385,7 @@ export function WorkloadClient() {
         : "Work history is unavailable.");
     }
 
-    if (!noteBridge) return;
+    if (!noteReader) return;
     if (notesResult.status === "fulfilled") {
       setDailyNotes(notesResult.value);
       setNotesState("available");

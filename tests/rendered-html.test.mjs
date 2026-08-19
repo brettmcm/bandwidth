@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 
 const templateRoot = new URL("../", import.meta.url);
@@ -29,6 +31,65 @@ test("server-renders Bandwidth", async () => {
   assert.doesNotMatch(html, /Your site is taking shape|codex-preview/i);
 });
 
+test("reads canonical Daily Notes for the local browser without persisting them", async (context) => {
+  const fixtureRoot = await mkdtemp(join(tmpdir(), "bandwidth-notes-"));
+  context.after(() => rm(fixtureRoot, { recursive: true, force: true }));
+  const vaultRoot = join(fixtureRoot, "Deep Thought");
+  const notesRoot = join(vaultRoot, "Storage", "Dailies");
+  await mkdir(join(vaultRoot, ".obsidian"), { recursive: true });
+  await mkdir(notesRoot, { recursive: true });
+  await writeFile(
+    join(fixtureRoot, "registry.json"),
+    JSON.stringify({
+      default_vault: "deep_thought",
+      vaults: {
+        deep_thought: {
+          canonical_path: vaultRoot,
+          display_name: "Deep Thought",
+        },
+      },
+    }),
+  );
+  await writeFile(
+    join(vaultRoot, ".obsidian", "daily-notes.json"),
+    JSON.stringify({ folder: "Storage/Dailies" }),
+  );
+  await writeFile(join(notesRoot, "2026-08-17.md"), "# Sunday\n\nMorning Brief");
+  await writeFile(join(notesRoot, "2026-08-18.md"), "# Monday\n\nEnd Of Day Brief");
+  await writeFile(join(notesRoot, "scratch.md"), "Not a dated note");
+
+  const { listDailyNotes } = await import("../scripts/local-daily-notes.mjs");
+  const notes = await listDailyNotes({ registryPath: join(fixtureRoot, "registry.json") });
+
+  assert.deepEqual(notes.map((note) => note.date), ["2026-08-18", "2026-08-17"]);
+  assert.equal(notes[0].relativePath, "Storage/Dailies/2026-08-18.md");
+  assert.equal(notes[0].markdown, "# Monday\n\nEnd Of Day Brief");
+  assert.match(notes[0].modifiedAt, /^\d{4}-\d{2}-\d{2}T/);
+  assert.equal(
+    notes[0].obsidianUrl,
+    "obsidian://open?vault=Deep+Thought&file=Storage%2FDailies%2F2026-08-18.md",
+  );
+});
+
+test("uses the loopback Daily Notes reader in a regular browser", async () => {
+  const [client, coordinator, launcher, packageJson] = await Promise.all([
+    readFile(new URL("../app/workload-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/bandwidth-server.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/launch-bandwidth.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(client, /window\.bandwidth\?\.listDailyNotes \?\? localDailyNotesReader\(\)/);
+  assert.match(client, /http:\/\/127\.0\.0\.1:\$\{appPort \+ 1\}\/api\/daily-notes/);
+  assert.match(coordinator, /notesServer\.listen\(notesPort, host/);
+  assert.match(coordinator, /!allowedOrigins\.has\(origin\)/);
+  assert.doesNotMatch(coordinator, /process\.on\("SIGHUP", \(\) => stop/);
+  assert.match(launcher, /detached: true/);
+  assert.match(launcher, /coordinator\.unref\(\)/);
+  assert.match(packageJson, /bandwidth-server\.mjs --mode=dev/);
+  assert.equal((packageJson.match(/bandwidth-server\.mjs --mode=dev/g) ?? []).length, 2);
+});
+
 test("removes starter UI and keeps local persistence configured", async () => {
   const [page, layout, packageJson, hosting] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
@@ -39,6 +100,7 @@ test("removes starter UI and keeps local persistence configured", async () => {
 
   assert.match(page, /<WorkloadClient \/>/);
   assert.match(layout, /Bandwidth/);
+  assert.match(layout, /https:\/\/rsms\.me\/inter\/inter\.css/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(hosting, /"d1": "DB"/);
   await assert.rejects(access(new URL("../app/_sites-preview", templateRoot)));
@@ -507,7 +569,13 @@ test("renders every right-side drawer as a floating panel", async () => {
 });
 
 test("separates planned, reflected, and unstructured Daily Note content", async () => {
-  const { countKeyTasks, splitDailyNote, splitMorningBrief, splitTodayPlan } = await import("../app/daily-note.ts");
+  const {
+    countKeyTasks,
+    hasEndOfDayBriefContent,
+    splitDailyNote,
+    splitMorningBrief,
+    splitTodayPlan,
+  } = await import("../app/daily-note.ts");
 
   assert.deepEqual(
     splitDailyNote("Preface\n\n## Morning Brief\nPlan\n\n## End Of Day Brief\nLearned"),
@@ -529,6 +597,9 @@ test("separates planned, reflected, and unstructured Daily Note content", async 
     fallback: "# Ops\nRaw note",
   });
   assert.deepEqual(splitDailyNote(""), { planned: "", reflection: "", fallback: "" });
+  assert.equal(hasEndOfDayBriefContent("## Morning Brief\nPlan only"), false);
+  assert.equal(hasEndOfDayBriefContent("## End Of Day Brief\n\n"), false);
+  assert.equal(hasEndOfDayBriefContent("## End Of Day Brief\nLearned"), true);
 
   assert.deepEqual(
     splitMorningBrief(`### Primary focus
@@ -600,8 +671,9 @@ test("adds a monthly Days calendar and a Completed and Reflection drawer", async
   assert.doesNotMatch(days, />Planned</);
   assert.doesNotMatch(days, />Daily note</);
   assert.match(days, /role="grid"/);
+  assert.match(days, /hasEndOfDayBriefContent\(note\.markdown\)/);
   assert.match(days, /calendar-note-indicator/);
-  assert.match(days, /Daily Note logged/);
+  assert.match(days, /End Of Day Brief recorded/);
   assert.match(days, /Drawer\.Root direction="right" handleOnly/);
   assert.match(days, /inspector drawer-panel day-drawer/);
   assert.match(days, /Open in Obsidian/);
@@ -661,7 +733,8 @@ test("renders Today from the current Deep Thought Daily Note", async () => {
   assert.doesNotMatch(todayView, /markdown=\{brief\.remaining\}/);
   assert.match(todayView, /markdown=\{planned\}/);
   assert.match(todayView, /markdown=\{fallback\}/);
-  assert.match(todayView, /markdown=\{reflection\}/);
+  assert.doesNotMatch(todayView, /reflection/);
+  assert.doesNotMatch(todayView, /End Of Day Brief/);
   assert.match(todayView, /Run \$hello to create the note and Morning Brief/);
   assert.match(todayView, /<Drawer\.Root/);
   assert.match(todayView, /className="today-focus-card"/);
@@ -682,11 +755,11 @@ test("renders Today from the current Deep Thought Daily Note", async () => {
   assert.equal(styles.match(/--accent: #FE374B;/g)?.length, 2);
   assert.match(styles, /\.today-note \{[^}]*margin: 0;/);
   assert.match(styles, /\.today-note-header h2 \{[^}]*font-size: 15px;/);
-  assert.match(styles, /\.today-date-weekday \{[^}]*font-weight: 550;/);
+  assert.match(styles, /\.today-date-weekday \{[^}]*font-weight: 500;/);
   assert.match(styles, /\.today-section--brief \{[^}]*padding-top: 18px;[^}]*border-top: 0;/);
   assert.match(styles, /\.today-focus-card \{[^}]*padding: 17px 16px;/);
   assert.match(styles, /\.today-focus-copy \{[^}]*font-size: 13px;[^}]*letter-spacing: -0\.01em;[^}]*line-height: 1\.3;/);
-  assert.match(styles, /\.today-focus-copy strong \{[^}]*font-weight: 550;/);
+  assert.match(styles, /\.today-focus-copy strong \{[^}]*font-weight: 500;/);
   assert.match(styles, /\.runway-brand-logo/);
   assert.doesNotMatch(styles, /today-date-orb/);
   assert.match(styles, /\.today-brief-list \.safe-markdown li/);
@@ -699,10 +772,11 @@ test("renders Today from the current Deep Thought Daily Note", async () => {
   assert.match(readme, /Today is read-only/);
 });
 
-test("keeps Daily Note Markdown in native memory behind a narrow read-only bridge", async () => {
-  const [nativeWrapper, client] = await Promise.all([
+test("keeps Daily Note Markdown in memory behind narrow local readers", async () => {
+  const [nativeWrapper, client, localReader] = await Promise.all([
     readFile(new URL("../native/Bandwidth/Sources/Bandwidth/main.swift", import.meta.url), "utf8"),
     readFile(new URL("../app/workload-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/local-daily-notes.mjs", import.meta.url), "utf8"),
   ]);
 
   assert.match(nativeWrapper, /\.codex\/obsidian-vaults\.json/);
@@ -713,6 +787,10 @@ test("keeps Daily Note Markdown in native memory behind a narrow read-only bridg
   assert.doesNotMatch(client, /localStorage|sessionStorage/);
   assert.match(client, /window\.bandwidth\?\.listDailyNotes/);
   assert.match(client, /bandwidth:app-active/);
+  assert.match(localReader, /\.codex\/obsidian-vaults\.json/);
+  assert.match(localReader, /\.obsidian\/daily-notes\.json/);
+  assert.match(localReader, /DAILY_NOTE_FILENAME/);
+  assert.doesNotMatch(localReader, /writeFile|localStorage|sessionStorage/);
 });
 
 test("records only Asana-confirmed completion history", async () => {

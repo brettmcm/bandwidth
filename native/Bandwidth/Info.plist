@@ -9,7 +9,9 @@
     <key>CFBundleExecutable</key>
     <string>Bandwidth</string>
     <key>CFBundleIconFile</key>
-    <string>Bandwidth.icns</string>
+    <string>kairos-icon</string>
+    <key>CFBundleIconName</key>
+    <string>kairos-icon</string>
     <key>CFBundleIdentifier</key>
     <string>com.mcmdesign.bandwidth</string>
     <key>CFBundleInfoDictionaryVersion</key>

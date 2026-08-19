@@ -143,7 +143,7 @@ function TodayEmptyState({
 
 export function TodayView({ date, note, notesState, notesError }: TodayViewProps) {
   const displayDate = dateDisplay(date);
-  const { planned, reflection, fallback } = splitDailyNote(note?.markdown ?? "");
+  const { planned, fallback } = splitDailyNote(note?.markdown ?? "");
   const brief = splitMorningBrief(planned);
   const plan = splitTodayPlan(brief.remaining);
   const keyTaskCount = countKeyTasks(plan.keyTasks);
@@ -204,12 +204,6 @@ export function TodayView({ date, note, notesState, notesError }: TodayViewProps
           </section>
         ) : null}
 
-        {reflection ? (
-          <section className="today-section" aria-label="End Of Day Brief">
-            <p className="today-section-label">End Of Day Brief</p>
-            <SafeMarkdown markdown={reflection} />
-          </section>
-        ) : null}
       </article>
     </div>
   );

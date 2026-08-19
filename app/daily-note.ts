@@ -48,6 +48,10 @@ export function splitDailyNote(markdown: string) {
   };
 }
 
+export function hasEndOfDayBriefContent(markdown: string) {
+  return Boolean(splitDailyNote(markdown).reflection);
+}
+
 function extractLevelThreeSection(markdown: string, titles: string | string[]) {
   const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
   const escapedTitles = (Array.isArray(titles) ? titles : [titles])
